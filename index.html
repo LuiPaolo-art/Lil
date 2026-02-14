@@ -55,23 +55,22 @@
       width: 100%;
       margin: 0 0 12px 0;
       break-inside: avoid;
-      overflow: hidden; /* ADDED: ensure image fills and overflow is clipped */
-      border-radius: 16px; /* ADDED: keep rounded corners on container */
+      overflow: hidden;
+      border-radius: 16px;
     }
 
     .collage-item img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* ADDED: immersive portrait fill */
+      object-fit: cover;
       display: block;
       filter: saturate(1.05) contrast(1.05);
-      transition: transform 0.25s ease, box-shadow 0.25s ease; /* ADDED */
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    /* ADDED: subtle hover effect */
     .collage-item img:hover {
-      transform: scale(1.04); /* ADDED */
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35); /* ADDED */
+      transform: scale(1.04);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
     }
 
     .collage-item:nth-child(4n)   { transform: translateY(4px); }
@@ -159,26 +158,24 @@
       opacity: 0.96;
     }
 
-    /* ADDED: easter egg hidden message */
-    .hero-secret { /* ADDED */
-      margin-top: 10px; /* ADDED */
-      font-size: 0.95rem; /* ADDED */
-      opacity: 0; /* ADDED */
-      transform: scale(0.97); /* ADDED */
-      transition: opacity 0.35s ease, transform 0.35s ease; /* ADDED */
-    } /* ADDED */
+    .hero-secret {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: scale(0.97);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
 
-    .hero-secret.visible { /* ADDED */
-      opacity: 1; /* ADDED */
-      transform: scale(1); /* ADDED */
-    } /* ADDED */
+    .hero-secret.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
     @media (max-width: 800px) {
       .hero-inner h2 { font-size: 1.6rem; }
     }
 
-    /* ADDED: scroll note (page 3 only) */
-    .scroll-note { /* ADDED */
+    .scroll-note {
       position: fixed;
       bottom: 10px;
       left: 50%;
@@ -189,11 +186,11 @@
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
-    } /* ADDED */
+    }
 
-    .scroll-note.visible { /* ADDED */
+    .scroll-note.visible {
       opacity: 0.8;
-    } /* ADDED */
+    }
 
     /* ===== CONTENU PAGES 1 & 2 ===== */
     .app {
@@ -350,27 +347,27 @@
   <div class="bg-collage">
     <div class="bg-collage-inner">
       <div class="collage-columns">
-        <div class="collage-item"><img src="images/Memory 1.jpg"  alt="Memory 1" /></div>
-        <div class="collage-item"><img src="images/Memory 2.jpg"  alt="Memory 2" /></div>
-        <div class="collage-item"><img src="images/Memory 3.jpg"  alt="Memory 3" /></div>
-        <div class="collage-item"><img src="images/Memory 4.jpg"  alt="Memory 4" /></div>
-        <div class="collage-item"><img src="images/Memory 5.jpg"  alt="Memory 5" /></div>
-        <div class="collage-item"><img src="images/Memory 6.jpg"  alt="Memory 6" /></div>
-        <div class="collage-item"><img src="images/Memory 7.jpg"  alt="Memory 7" /></div>
-        <div class="collage-item"><img src="images/Memory 8.jpg"  alt="Memory 8" /></div>
-        <div class="collage-item"><img src="images/Memory 9.jpg"  alt="Memory 9" /></div>
-        <div class="collage-item"><img src="images/Memory 10.jpg" alt="Memory 10" /></div>
-        <div class="collage-item"><img src="images/Memory 11.jpg" alt="Memory 11" /></div>
-        <div class="collage-item"><img src="images/Memory 12.jpg" alt="Memory 12" /></div>
-        <div class="collage-item"><img src="images/Memory 13.jpg" alt="Memory 13" /></div>
-        <div class="collage-item"><img src="images/Memory 14.jpg" alt="Memory 14" /></div>
-        <div class="collage-item"><img src="images/Memory 15.jpg" alt="Memory 15" /></div>
-        <div class="collage-item"><img src="images/Memory 16.jpg" alt="Memory 16" /></div>
-        <div class="collage-item"><img src="images/Memory 17.jpg" alt="Memory 17" /></div>
-        <div class="collage-item"><img src="images/Memory 18.jpg" alt="Memory 18" /></div>
-        <div class="collage-item"><img src="images/Memory 19.jpg" alt="Memory 19" /></div>
-        <div class="collage-item"><img src="images/Memory 20.jpg" alt="Memory 20" /></div>
-        <div class="collage-item"><img src="images/Memory 21.jpg" alt="Memory 21" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 1.jpg"  alt="Memory 1" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 2.jpg"  alt="Memory 2" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 3.jpg"  alt="Memory 3" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 4.jpg"  alt="Memory 4" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 5.jpg"  alt="Memory 5" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 6.jpg"  alt="Memory 6" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 7.jpg"  alt="Memory 7" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 8.jpg"  alt="Memory 8" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 9.jpg"  alt="Memory 9" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 10.jpg" alt="Memory 10" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 11.jpg" alt="Memory 11" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 12.jpg" alt="Memory 12" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 13.jpg" alt="Memory 13" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 14.jpg" alt="Memory 14" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 15.jpg" alt="Memory 15" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 16.jpg" alt="Memory 16" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 17.jpg" alt="Memory 17" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 18.jpg" alt="Memory 18" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 19.jpg" alt="Memory 19" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 20.jpg" alt="Memory 20" /></div>
+        <div class="collage-item"><img src="St.V/images/Memory 21.jpg" alt="Memory 21" /></div>
       </div>
     </div>
   </div>
@@ -386,20 +383,15 @@
     <div class="hero-inner">
       <h2>Us. Every moment. Every memory ❤️</h2>
       <p>And this is only the beginning…</p>
-      <!-- ADDED: easter-egg message container -->
-      <div class="hero-secret" id="heroSecret">You’re my favorite person. Always. 💗</div> <!-- ADDED -->
+      <div class="hero-secret" id="heroSecret">You’re my favorite person. Always. 💗</div>
     </div>
   </div>
 
-  <!-- ADDED: scroll note (page 3 only) -->
   <div class="scroll-note" id="scrollNote">
     Every picture has a story. Ours means everything.
   </div>
-  <!-- ADDED -->
 
-  <!-- ADDED: background music element (hidden) -->
   <audio id="bgMusic" src="music/your-song.mp3" loop style="display:none;"></audio>
-  <!-- ADDED -->
 
   <!-- Pages 1 & 2 -->
   <div class="app">
@@ -436,7 +428,7 @@ Thank you for choosing me.
           One last thing…
         </button>
         <div class="music-hint">
-          <!-- ADDED: removed “You can add your own music...” line -->
+          <!-- sentence removed -->
         </div>
       </div>
     </div>
@@ -444,8 +436,6 @@ Thank you for choosing me.
     <!-- PAGE 3 (état) -->
     <div class="page page-3"></div>
   </div>
-
-  <!-- Optional music file must be placed in /music/your-song.mp3 -->
 
   <script>
     /* Coeurs flottants */
@@ -466,8 +456,8 @@ Thank you for choosing me.
 
     const pages = document.querySelectorAll(".page");
     const heroText = document.getElementById("heroText");
-    const scrollNote = document.getElementById("scrollNote"); /* ADDED */
-    const bgMusic = document.getElementById("bgMusic");       /* ADDED */
+    const scrollNote = document.getElementById("scrollNote");
+    const bgMusic = document.getElementById("bgMusic");
 
     function showPage(index) {
       pages.forEach((page, i) => {
@@ -476,7 +466,6 @@ Thank you for choosing me.
       });
       heroText.style.opacity = index === 2 ? "1" : "0";
 
-      /* ADDED: scroll note + music only on page 3 */
       if (index === 2) {
         scrollNote.classList.add("visible");
         if (bgMusic) {
@@ -508,7 +497,6 @@ Thank you for choosing me.
     let noClickCount = 0;
     let yesSizeMultiplier = 1;
 
-    /* ADDED: confetti hearts burst on Yes */
     function heartConfettiBurst(x, y) {
       const count = 16;
       for (let i = 0; i < count; i++) {
@@ -546,7 +534,6 @@ Thank you for choosing me.
       title.textContent = "Yaaay! Best answer ever 💖";
       subtitle.textContent = "Loading something special for you…";
 
-      /* ADDED: trigger confetti burst around the Yes button */
       const rect = yesBtn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -599,7 +586,6 @@ Thank you for choosing me.
       attributeFilter: ["class"]
     });
 
-    /* ADDED: easter egg double-click on hero text */
     const heroInner = document.querySelector(".hero-inner");
     const heroSecret = document.getElementById("heroSecret");
     if (heroInner && heroSecret) {
