@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my Valentine? 💕</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #fff0f5;
+      --primary: #ff4b6e;
+      --primary-soft: #ff85a2;
+      --overlay-dark: rgba(0, 0, 0, 0.55);
+      --overlay-pink: rgba(255, 75, 110, 0.35);
+      --text-light: #ffeef6;
+      --shadow-soft: 0 18px 40px rgba(255, 75, 110, 0.28);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: #3b1130;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ===== FOND PINTEREST PLEIN ÉCRAN (SCROLL VERTICAL) ===== */
+    .bg-collage {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-collage-inner {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      padding: 10px 10px 40px 10px;
+    }
+
+    .collage-columns {
+      column-width: 260px;
+      column-gap: 12px;
+      width: 100%;
+    }
+
+    .collage-item {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 12px 0;
+      break-inside: avoid;
+      overflow: hidden; /* ADDED: ensure image fills and overflow is clipped */
+      border-radius: 16px; /* ADDED: keep rounded corners on container */
+    }
+
+    .collage-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* ADDED: immersive portrait fill */
+      display: block;
+      filter: saturate(1.05) contrast(1.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease; /* ADDED */
+    }
+
+    /* ADDED: subtle hover effect */
+    .collage-item img:hover {
+      transform: scale(1.04); /* ADDED */
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35); /* ADDED */
+    }
+
+    .collage-item:nth-child(4n)   { transform: translateY(4px); }
+    .collage-item:nth-child(5n+2) { transform: translateY(-4px); }
+
+    @media (max-width: 900px) {
+      .bg-collage-inner { padding: 6px 6px 30px 6px; }
+      .collage-columns  { column-width: 180px; column-gap: 8px; }
+    }
+
+    /* ===== OVERLAY ===== */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center,
+                  var(--overlay-pink),
+                  var(--overlay-dark));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ===== COEURS FLOTTANTS ===== */
+    .heart {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background-color: var(--primary);
+      transform: rotate(45deg);
+      opacity: 0.7;
+      top: 100%;
+      left: 0;
+      pointer-events: none;
+      z-index: 2;
+      animation: floatUp linear infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+    .heart::before { top: -9px; left: 0; }
+    .heart::after  { left: -9px; top: 0; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(45deg); opacity: 0.8; }
+      100% { transform: translateY(-120vh) rotate(45deg); opacity: 0; }
+    }
+
+    #heart-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ===== TEXTE HERO PAGE 3 ===== */
+    .hero-text {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 3;
+      color: var(--text-light);
+      pointer-events: none;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .hero-inner {
+      max-width: 520px;
+    }
+    .hero-inner h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .hero-inner p {
+      font-size: 1rem;
+      opacity: 0.96;
+    }
+
+    /* ADDED: easter egg hidden message */
+    .hero-secret { /* ADDED */
+      margin-top: 10px; /* ADDED */
+      font-size: 0.95rem; /* ADDED */
+      opacity: 0; /* ADDED */
+      transform: scale(0.97); /* ADDED */
+      transition: opacity 0.35s ease, transform 0.35s ease; /* ADDED */
+    } /* ADDED */
+
+    .hero-secret.visible { /* ADDED */
+      opacity: 1; /* ADDED */
+      transform: scale(1); /* ADDED */
+    } /* ADDED */
+
+    @media (max-width: 800px) {
+      .hero-inner h2 { font-size: 1.6rem; }
+    }
+
+    /* ADDED: scroll note (page 3 only) */
+    .scroll-note { /* ADDED */
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    } /* ADDED */
+
+    .scroll-note.visible { /* ADDED */
+      opacity: 0.8;
+    } /* ADDED */
+
+    /* ===== CONTENU PAGES 1 & 2 ===== */
+    .app {
+      position: relative;
+      z-index: 4;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .page.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 28px 22px 26px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe0eb, transparent 72%);
+      top: -80px;
+      right: -60px;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #b03055;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-size: 1.9rem;
+      line-height: 1.3;
+      margin-bottom: 26px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.25s ease, color 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+      color: #fff;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-soft);
+      min-width: 130px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 20px 45px rgba(255, 75, 110, 0.35);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 0.98rem;
+      border: 1px solid rgba(255, 75, 110, 0.3);
+      min-width: 100px;
+    }
+    .btn-ghost:hover {
+      background: #ffe5f0;
+      transform: translateY(-1px);
+    }
+
+    .page-2-card {
+      background: radial-gradient(circle at top, #ffe0ec 0, #ffffff 55%);
+      padding-bottom: 32px;
+    }
+    .page-2-card::before { display: none; }
+
+    .page-2-title {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      color: #b02040;
+    }
+    .message {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #5e2747;
+      white-space: pre-line;
+      margin-bottom: 26px;
+    }
+    .soft-note {
+      font-size: 0.92rem;
+      color: #b03055;
+      margin-bottom: 20px;
+    }
+    .music-hint {
+      font-size: 0.85rem;
+      color: #8b2750;
+      margin-top: 4px;
+      opacity: 0.85;
+    }
+    .page-2-hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <!-- FOND PINTEREST PLEIN ÉCRAN -->
+  <div class="bg-collage">
+    <div class="bg-collage-inner">
+      <div class="collage-columns">
+        <div class="collage-item"><img src="images/Memory 1.jpg"  alt="Memory 1" /></div>
+        <div class="collage-item"><img src="images/Memory 2.jpg"  alt="Memory 2" /></div>
+        <div class="collage-item"><img src="images/Memory 3.jpg"  alt="Memory 3" /></div>
+        <div class="collage-item"><img src="images/Memory 4.jpg"  alt="Memory 4" /></div>
+        <div class="collage-item"><img src="images/Memory 5.jpg"  alt="Memory 5" /></div>
+        <div class="collage-item"><img src="images/Memory 6.jpg"  alt="Memory 6" /></div>
+        <div class="collage-item"><img src="images/Memory 7.jpg"  alt="Memory 7" /></div>
+        <div class="collage-item"><img src="images/Memory 8.jpg"  alt="Memory 8" /></div>
+        <div class="collage-item"><img src="images/Memory 9.jpg"  alt="Memory 9" /></div>
+        <div class="collage-item"><img src="images/Memory 10.jpg" alt="Memory 10" /></div>
+        <div class="collage-item"><img src="images/Memory 11.jpg" alt="Memory 11" /></div>
+        <div class="collage-item"><img src="images/Memory 12.jpg" alt="Memory 12" /></div>
+        <div class="collage-item"><img src="images/Memory 13.jpg" alt="Memory 13" /></div>
+        <div class="collage-item"><img src="images/Memory 14.jpg" alt="Memory 14" /></div>
+        <div class="collage-item"><img src="images/Memory 15.jpg" alt="Memory 15" /></div>
+        <div class="collage-item"><img src="images/Memory 16.jpg" alt="Memory 16" /></div>
+        <div class="collage-item"><img src="images/Memory 17.jpg" alt="Memory 17" /></div>
+        <div class="collage-item"><img src="images/Memory 18.jpg" alt="Memory 18" /></div>
+        <div class="collage-item"><img src="images/Memory 19.jpg" alt="Memory 19" /></div>
+        <div class="collage-item"><img src="images/Memory 20.jpg" alt="Memory 20" /></div>
+        <div class="collage-item"><img src="images/Memory 21.jpg" alt="Memory 21" /></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="bg-overlay"></div>
+
+  <!-- Cœurs flottants -->
+  <div id="heart-layer"></div>
+
+  <!-- Texte hero (page 3) -->
+  <div class="hero-text" id="heroText">
+    <div class="hero-inner">
+      <h2>Us. Every moment. Every memory ❤️</h2>
+      <p>And this is only the beginning…</p>
+      <!-- ADDED: easter-egg message container -->
+      <div class="hero-secret" id="heroSecret">You’re my favorite person. Always. 💗</div> <!-- ADDED -->
+    </div>
+  </div>
+
+  <!-- ADDED: scroll note (page 3 only) -->
+  <div class="scroll-note" id="scrollNote">
+    Every picture has a story. Ours means everything.
+  </div>
+  <!-- ADDED -->
+
+  <!-- ADDED: background music element (hidden) -->
+  <audio id="bgMusic" src="music/your-song.mp3" loop style="display:none;"></audio>
+  <!-- ADDED -->
+
+  <!-- Pages 1 & 2 -->
+  <div class="app">
+    <!-- PAGE 1 -->
+    <div class="page page-1 active">
+      <div class="card" id="page1-card">
+        <div class="subtitle" id="page1-subtitle">
+          Hey you… I have a question for you 💕
+        </div>
+        <div class="title" id="page1-title">
+          Will you be my Valentine?
+        </div>
+        <div class="buttons">
+          <button class="btn-primary" id="yesBtn">Yes ❤️</button>
+          <button class="btn-ghost" id="noBtn">No ❌</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page page-2">
+      <div class="card page-2-card">
+        <div class="page-2-hearts" id="page2-hearts"></div>
+        <h2 class="page-2-title">You just made me the happiest person ❤️</h2>
+        <div class="message">
+I’m not perfect, but what I feel for you is real.
+Thank you for being you.
+Thank you for choosing me.
+        </div>
+        <div class="soft-note">
+          (Optional: turn your volume up for a soft background song 🎵)
+        </div>
+        <button class="btn-primary" id="toPage3Btn">
+          One last thing…
+        </button>
+        <div class="music-hint">
+          <!-- ADDED: removed “You can add your own music...” line -->
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 (état) -->
+    <div class="page page-3"></div>
+  </div>
+
+  <!-- Optional music file must be placed in /music/your-song.mp3 -->
+
+  <script>
+    /* Coeurs flottants */
+    const heartLayer = document.getElementById("heart-layer");
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      const size = 12 + Math.random() * 16;
+      heart.style.width = size + "px";
+      heart.style.height = size + "px";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+      heart.style.opacity = 0.4 + Math.random() * 0.6;
+      heartLayer.appendChild(heart);
+      setTimeout(() => heart.remove(), 11000);
+    }
+    setInterval(createHeart, 400);
+
+    const pages = document.querySelectorAll(".page");
+    const heroText = document.getElementById("heroText");
+    const scrollNote = document.getElementById("scrollNote"); /* ADDED */
+    const bgMusic = document.getElementById("bgMusic");       /* ADDED */
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        if (i === index) page.classList.add("active");
+        else page.classList.remove("active");
+      });
+      heroText.style.opacity = index === 2 ? "1" : "0";
+
+      /* ADDED: scroll note + music only on page 3 */
+      if (index === 2) {
+        scrollNote.classList.add("visible");
+        if (bgMusic) {
+          bgMusic.volume = 0.25;
+          bgMusic.play().catch(() => {});
+        }
+      } else {
+        scrollNote.classList.remove("visible");
+        if (bgMusic) {
+          bgMusic.pause();
+          bgMusic.currentTime = 0;
+        }
+      }
+    }
+
+    /* PAGE 1 */
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+    const subtitle = document.getElementById("page1-subtitle");
+    const title    = document.getElementById("page1-title");
+
+    const noTexts = [
+      "Are you sure?",
+      "Think again…",
+      "Last chance 👀",
+      "Really? 😳",
+      "Okay but… I insist 😤"
+    ];
+    let noClickCount = 0;
+    let yesSizeMultiplier = 1;
+
+    /* ADDED: confetti hearts burst on Yes */
+    function heartConfettiBurst(x, y) {
+      const count = 16;
+      for (let i = 0; i < count; i++) {
+        const h = document.createElement("div");
+        h.classList.add("heart");
+        const size = 10 + Math.random() * 14;
+        h.style.width = size + "px";
+        h.style.height = size + "px";
+        h.style.left = (x || window.innerWidth / 2) + (Math.random() * 120 - 60) + "px";
+        h.style.top = (y || window.innerHeight / 2) + (Math.random() * 40 - 20) + "px";
+        h.style.animationDuration = 3 + Math.random() * 2 + "s";
+        heartLayer.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+      }
+    }
+
+    noBtn.addEventListener("click", () => {
+      const index = Math.min(noClickCount, noTexts.length - 1);
+      subtitle.textContent = noTexts[index];
+      noClickCount++;
+
+      yesSizeMultiplier += 0.18;
+      yesBtn.style.transform = `scale(${yesSizeMultiplier})`;
+      yesBtn.style.minWidth = 130 * yesSizeMultiplier + "px";
+
+      const noScale = Math.max(0.55, 1 - noClickCount * 0.1);
+      const moveX = (Math.random() - 0.5) * 40;
+      const moveY = (Math.random() - 0.5) * 18;
+      noBtn.style.transform = `scale(${noScale}) translate(${moveX}px, ${moveY}px)`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+      title.textContent = "Yaaay! Best answer ever 💖";
+      subtitle.textContent = "Loading something special for you…";
+
+      /* ADDED: trigger confetti burst around the Yes button */
+      const rect = yesBtn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      heartConfettiBurst(centerX, centerY);
+
+      setTimeout(() => showPage(1), 700);
+    });
+
+    /* PAGE 2 */
+    const page2HeartsContainer = document.getElementById("page2-hearts");
+    function spawnInnerHeart() {
+      const h = document.createElement("div");
+      h.classList.add("heart");
+      h.style.position = "absolute";
+      h.style.top = "100%";
+      h.style.left = Math.random() * 100 + "%";
+      h.style.animationDuration = 6 + Math.random() * 4 + "s";
+      h.style.opacity = 0.3 + Math.random() * 0.5;
+      page2HeartsContainer.appendChild(h);
+      setTimeout(() => h.remove(), 11000);
+    }
+
+    let page2Active = false;
+    function startPage2Hearts() {
+      if (page2Active) return;
+      page2Active = true;
+      setInterval(() => {
+        if (!page2Active) return;
+        spawnInnerHeart();
+      }, 500);
+    }
+
+    const toPage3Btn = document.getElementById("toPage3Btn");
+    toPage3Btn.addEventListener("click", () => {
+      page2Active = false;
+      showPage(2);
+    });
+
+    const observer = new MutationObserver(() => {
+      const page2 = document.querySelector(".page-2");
+      if (page2.classList.contains("active")) {
+        startPage2Hearts();
+      } else {
+        page2Active = false;
+      }
+    });
+    observer.observe(document.body, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ["class"]
+    });
+
+    /* ADDED: easter egg double-click on hero text */
+    const heroInner = document.querySelector(".hero-inner");
+    const heroSecret = document.getElementById("heroSecret");
+    if (heroInner && heroSecret) {
+      heroInner.addEventListener("dblclick", () => {
+        heroSecret.classList.toggle("visible");
+      });
+    }
+  </script>
+</body>
+</html>
