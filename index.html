@@ -76,9 +76,17 @@
     .collage-item:nth-child(4n)   { transform: translateY(4px); }
     .collage-item:nth-child(5n+2) { transform: translateY(-4px); }
 
+    /* tablette */
     @media (max-width: 900px) {
       .bg-collage-inner { padding: 6px 6px 30px 6px; }
       .collage-columns  { column-width: 180px; column-gap: 8px; }
+    }
+
+    /* téléphone */
+    @media (max-width: 600px) {
+      .bg-collage-inner { padding: 4px 4px 26px 4px; }
+      .collage-columns  { column-width: 150px; column-gap: 6px; }
+      .collage-item img { object-fit: contain; }
     }
 
     /* ===== OVERLAY ===== */
@@ -339,6 +347,20 @@
       pointer-events: none;
       overflow: hidden;
       z-index: -1;
+    }
+
+    /* carte plus compacte sur mobile */
+    @media (max-width: 600px) {
+      .card {
+        padding: 22px 18px 20px;
+        border-radius: 20px;
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+      .subtitle {
+        font-size: 1.05rem;
+      }
     }
   </style>
 </head>
